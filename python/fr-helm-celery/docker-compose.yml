@@ -1,0 +1,83 @@
+version: "3.3"
+
+services:
+  redis:
+    image: redis:latest
+    hostname: redis
+    networks:
+      custom_network:
+        aliases:
+          - redis
+  fr-ops-celery:
+    build:
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+      context: ./
+      dockerfile: ./Dockerfile
+    image: fr-ops-celery:latest
+    environment:
+      - FR_OPS_ASYNCH_LOG_LEVEL
+      - FR_OPS_CELERY_BROKER_URL
+      - FR_OPS_CELERY_RESULT_BACKEND
+      - FR_OPS_CELERY_WORKERS
+      - FR_OPS_BEAT_DB
+      - FR_OPS_DATA_FILE
+      - FR_OPS_WEB_ERROR_LOG
+      - FR_OPS_SIGNAL_REDIS_URL
+      - C_FORCE_ROOT
+      - FR_OPS_CELERY_LOG_PATH
+      - FR_OPS_TEST_WORKER_LOG_PATH
+      - http_proxy
+      - https_proxy
+      - no_proxy
+    volumes:
+      - ./:/opt/fr-helm-celery/
+    command: bash -c 'rm -rf $FR_OPS_TEST_WORKER_LOG_PATH ; pip install -e /opt/fr-helm-celery && celery worker -A fr_helm_celery.orchestrators --pool gevent --loglevel=info --logfile=$FR_OPS_TEST_WORKER_LOG_PATH'
+    depends_on:
+      - redis
+    links:
+      - redis
+    networks:
+      custom_network:
+        aliases:
+          - fr-ops-celery
+  fr-ops-web:
+    image: python:latest
+    environment:
+      - FR_OPS_API_DEBUG
+      - FR_OPS_API_HOST
+      - FR_OPS_API_PORT
+      - FR_OPS_ASYNCH_LOG_LEVEL
+      - FR_OPS_CELERY_BROKER_URL
+      - FR_OPS_CELERY_RESULT_BACKEND
+      - FR_OPS_DATA_FILE
+      - FR_OPS_DB_USERNAME
+      - FR_OPS_WEB_ERROR_LOG
+      - FR_OPS_SIGNAL_REDIS_URL
+      - FR_OPS_TEST_WORKER_LOG_PATH
+      - C_FORCE_ROOT
+      - http_proxy
+      - https_proxy
+      - no_proxy
+    command: sleep 1d
+    # command: bash -c 'pip install -Ur /opt/fr-helm-celery/requirements/web.txt; echo "Starting web"; gunicorn --bind $FR_OPS_API_HOST:$FR_OPS_API_PORT --workers 2 --access-logfile=/var/log/gunicorn_access.log --error-logfile=/var/log/gunicorn_error.log fr-helm-celery.app:app'
+    volumes:
+      - ./:/opt/fr-helm-celery/
+    ports:
+      - "$FR_OPS_API_PORT:$FR_OPS_API_PORT"
+    expose:
+      - "$FR_OPS_API_PORT"
+    depends_on:
+      - redis
+      - fr-ops-celery
+    links:
+      - redis
+    networks:
+      custom_network:
+        aliases:
+          - fr-ops-web
+
+networks:
+  custom_network:

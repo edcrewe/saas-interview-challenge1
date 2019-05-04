@@ -1,0 +1,71 @@
+# Packages
+*.rpm
+*.egg-info
+dist/
+build/
+eggs/
+/parts/
+/var/
+sdist/
+/develop-eggs/
+.installed.cfg
+/lib/
+/lib64/
+.eggs/
+/venv
+
+*.py[cod]
+
+# C extensions
+*.so
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+tests/unit-test-report.xml
+tests/coverage.xml
+tests/integration/coverage.xml
+tests/integration/integration-test-report.xml
+*,cover
+unit-test-report.xml
+# Translations
+*.mo
+
+# runner.py test reports (integration)
+tests/integration/test-reports/*
+tests/unit/test-reports/*
+
+# Complexity
+output/*.html
+output/*/index.html
+
+# Sphinx
+/docs/_build
+/docs/_static
+/docs/modules.rst
+/docs/fr_helm_celery*.rst
+
+# pyCharm
+.idea
+
+# Mac
+.DS_Store
+DS2
+
+/.vagrant
+/tags
+docs/_build/
+
+# GNU Global
+GPATH
+GRTAGS
+GTAGS
+
+# Artifacts of running code from within package
+*.pid
+
+.python-version
+.tool-versions
