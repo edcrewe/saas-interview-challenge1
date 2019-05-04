@@ -27,9 +27,8 @@ Some requirements / concepts we would like to see (either in code or at least ou
 ## Completion Format
 
 - [ ] To do this challenge, please Fork this repository to your own public github repository.
-- [ ] Build all the things, and have fun! 
+- [ ] Build all the things, and have fun!
 - [ ] Check your code into the fork when you are complete.
-- [ ] :shipit:  Send the recruiter at ForgeRock the link to your repository.  
+- [ ] :shipit:  Send the recruiter at ForgeRock the link to your repository.
 
 We will review what you did during one of your interview sessions!
-
