@@ -24,7 +24,7 @@ CONFIG = {
         "log_level": os.environ.get("FR_OPS_ASYNCH_LOG_LEVEL", "WARN"),
     },
     "api": {
-        "debug": os.environ.has_key("FR_OPS_API_DEBUG"),
+        "debug": str("FR_OPS_API_DEBUG" in os.environ),
         "server_name": os.environ.get("FR_OPS_SERVER_NAME", "localhost"),
         "host": os.environ.get("FR_OPS_API_HOST", "localhost"),
         "port": os.environ.get("FR_OPS_API_PORT", 5000),

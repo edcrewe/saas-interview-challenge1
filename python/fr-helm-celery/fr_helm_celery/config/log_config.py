@@ -1,7 +1,4 @@
 """Logging configuration
-
-   Currently the same for any environment - errors are logged to file and also to signal if critical
-   If in debug mode then all debug logging is written too. Also the wsgi handler is added for console logging.
 """
 from fr_helm_celery.config.settings import CONFIG
 

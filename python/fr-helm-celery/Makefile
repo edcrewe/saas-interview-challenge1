@@ -26,7 +26,7 @@ clean:
 	find . -name '*,cover' -exec rm -fr {} +
 
 lint:
-	python -m flake8 --builtins="_" fr_helm_celery setup.py
+	python -m flake8 --builtins="_" --max-line-length=90 fr_helm_celery setup.py
 	python -m bandit -r fr_helm_celery
 
 test:

@@ -1,7 +1,6 @@
 from logging.config import dictConfig
 
 from flask import Flask
-from flask_migrate import Migrate
 import pkg_resources
 
 from fr_helm_celery.apis import api
@@ -22,7 +21,6 @@ resource_package = "flask_restplus"
 templates = pkg_resources.resource_filename(resource_package, "templates")
 
 app = create_app(AppConfig)
-migrate = Migrate(app, db)
 
 
 def main():

@@ -61,7 +61,7 @@ services:
       - http_proxy
       - https_proxy
       - no_proxy
-    command: sleep 1d
+    command: bash -c 'pip install -Ur /opt/fr-helm-celery/requirements/web.txt && sleep 1d'
     # command: bash -c 'pip install -Ur /opt/fr-helm-celery/requirements/web.txt; echo "Starting web"; gunicorn --bind $FR_OPS_API_HOST:$FR_OPS_API_PORT --workers 2 --access-logfile=/var/log/gunicorn_access.log --error-logfile=/var/log/gunicorn_error.log fr-helm-celery.app:app'
     volumes:
       - ./:/opt/fr-helm-celery/

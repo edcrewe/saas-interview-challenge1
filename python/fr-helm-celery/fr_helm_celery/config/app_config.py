@@ -12,7 +12,7 @@ class CeleryConfig(object):
     enable_utc = True
 
 
-class FlaskConfig(DBConfig):
+class FlaskConfig(object):
     """Flask config - see http://flask.pocoo.org/docs/1.0/config/"""
 
     ENV = "development"

@@ -1,5 +1,3 @@
-import os
-
 try:
     from setuptools import setup
 except ImportError:
@@ -18,7 +16,8 @@ setup(
     author="Ed Crewe",
     author_email="edmundcrewe@gmail.com",
     url="https://github.com/ForgeCloud/saas-interview-challenge1",
-    description="Creates a RESTful microservice for scheduling Helm tasks to deploy ForgeRock components",
+    description="""Creates a RESTful microservice for scheduling
+                   Helm tasks to deploy ForgeRock components""",
     license="Apache",
     version=version,
     long_description=description,

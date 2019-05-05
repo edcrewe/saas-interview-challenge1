@@ -31,7 +31,7 @@ class Chart(Resource):
     @chart_api.response(202, "Chart accepted for submission")
     @chart_api.expect(chart, validate=True)
     def post(self):
-        chart_data = alert_api.payload
+        chart_data = chart_api.payload
         chart = ChartBuilder(
             {
                 "name": chart_data["name"],
@@ -41,4 +41,5 @@ class Chart(Resource):
                 },
             }
         )
-        return "Got chart"
+        if chart:
+            return "Got chart"
