@@ -41,4 +41,5 @@ teardown:
 
 run:
 	docker-compose --project-name=helm_service up --force-recreate --no-start
-	docker-compose --project-name=helm_service run -d -p 5000:5000 -e FLASK_APP=fr_helm_celery.app -e PYTHONPATH=/opt/fr_helm_celery fr-ops-web /bin/bash -c "cd /opt/fr_helm_celery && make testdb && exec gunicorn --bind 0.0.0.0:5000 --workers 2 --access-logfile=/opt/fr_helm_celery/log/gunicorn_access.log --error-logfile=/opt/fr_helm_celery/log/gunicorn_error.log --log-level=error fr_helm_celery.app:app"
+	docker-compose --project-name=helm_service run -d -p 5000:5000 -e FLASK_APP=fr_helm_celery.app -e PYTHONPATH=/opt/fr-helm-celery/fr_helm_celery fr-ops-web /bin/bash -c "pip install -Ur /opt/fr-helm-celery/requirements/web.txt && cd /opt/fr-helm-celery && sleep 1d"
+# exec gunicorn --bind 0.0.0.0:5000 --workers 2 --access-logfile=/var/log/gunicorn_access.log --error-logfile=/var/log/gunicorn_error.log --log-level=error fr_helm_celery.app:app"

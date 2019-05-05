@@ -16,7 +16,8 @@ class FlaskConfig(object):
     """Flask config - see http://flask.pocoo.org/docs/1.0/config/"""
 
     ENV = "development"
-    SERVER_NAME = CONFIG["api"]["server_name"]
-    # PREFERRED_URL_SCHEME = "https"
-    DEBUG = CONFIG["api"]["debug"]
+    if CONFIG["api"]["debug"]:
+        DEBUG = True
+    else:
+        DEBUG = False
     TESTING = True

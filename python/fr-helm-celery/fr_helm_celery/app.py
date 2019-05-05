@@ -4,7 +4,7 @@ from flask import Flask
 import pkg_resources
 
 from fr_helm_celery.apis import api
-from fr_helm_celery.config import CONFIG, LOG_CONFIG, AppConfig
+from fr_helm_celery.config import CONFIG, LOG_CONFIG, FlaskConfig
 
 
 def create_app(config):
@@ -20,7 +20,7 @@ dictConfig(LOG_CONFIG)
 resource_package = "flask_restplus"
 templates = pkg_resources.resource_filename(resource_package, "templates")
 
-app = create_app(AppConfig)
+app = create_app(FlaskConfig)
 
 
 def main():

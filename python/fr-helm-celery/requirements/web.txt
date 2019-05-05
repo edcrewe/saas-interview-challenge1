@@ -1,7 +1,4 @@
 Flask>=1.0.2
 Flask-RESTPlus>=0.12.1
 gunicorn
-# gevent
-# python-dateutil
-# requests
-# click
+celery[redis]>=4.2.1
