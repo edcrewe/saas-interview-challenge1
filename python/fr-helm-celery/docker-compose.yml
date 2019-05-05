@@ -29,7 +29,6 @@ services:
       - C_FORCE_ROOT
       - FR_OPS_CELERY_LOG_PATH
       - FR_OPS_TEST_WORKER_LOG_PATH
-      - NODENAME
       - http_proxy
       - https_proxy
       - no_proxy
@@ -44,6 +43,37 @@ services:
       custom_network:
         aliases:
           - fr-ops-celery
+  fr-ops-flower:
+    image: fr-ops-celery:latest
+    ports:
+     - "5555:5555"
+    environment:
+      - FR_OPS_ASYNCH_LOG_LEVEL
+      - FR_OPS_CELERY_BROKER_URL
+      - FR_OPS_CELERY_RESULT_BACKEND
+      - FR_OPS_CELERY_WORKERS
+      - FR_OPS_BEAT_DB
+      - FR_OPS_DATA_FILE
+      - FR_OPS_WEB_ERROR_LOG
+      - FR_OPS_SIGNAL_REDIS_URL
+      - C_FORCE_ROOT
+      - FR_OPS_CELERY_LOG_PATH
+      - FR_OPS_TEST_WORKER_LOG_PATH
+      - http_proxy
+      - https_proxy
+      - no_proxy
+    entrypoint: flower
+    command: -A fr_helm_celery.orchestrators.tasks --port=5555 --broker=redis://redis:6379/1
+    volumes:
+      - ./:/opt/fr-helm-celery/
+    depends_on:
+      - redis
+    links:
+      - redis
+    networks:
+      custom_network:
+        aliases:
+          - fr-ops-flower
   fr-ops-web:
     image: python:latest
     environment:
@@ -62,7 +92,7 @@ services:
       - http_proxy
       - https_proxy
       - no_proxy
-    command: bash -c 'pip install -Ur /opt/fr-helm-celery/requirements/web.txt; echo "Starting web"; gunicorn --bind $FR_OPS_API_HOST:$FR_OPS_API_PORT --workers 2 --access-logfile=/var/log/gunicorn_access.log --error-logfile=/var/log/gunicorn_error.log fr-helm-celery.app:app'
+    command: bash -c "pip install -Ur /opt/fr-helm-celery/requirements/web.txt && cd /opt/fr-helm-celery && exec gunicorn --bind 0.0.0.0:5000 --workers 2 --access-logfile=/var/log/gunicorn_access.log --error-logfile=/var/log/gunicorn_error.log --log-level=error fr_helm_celery.app:app"
     volumes:
       - ./:/opt/fr-helm-celery/
     ports:
@@ -72,6 +102,7 @@ services:
     depends_on:
       - redis
       - fr-ops-celery
+      - fr-ops-flower
     links:
       - redis
     networks:

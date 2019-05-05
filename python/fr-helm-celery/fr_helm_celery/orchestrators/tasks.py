@@ -3,14 +3,15 @@
 """
 from fr_helm_celery.orchestrators import celery
 from pyhelm.chartbuilder import ChartBuilder
+from pyhelm.tiller import Tiller
 import time
 
 
 @celery.task(name="tasks.stub")
 def longtime_add(x, y):
     print("long time task begins")
-    # sleep 5 seconds
-    time.sleep(5)
+    # sleep 2 seconds
+    time.sleep(2)
     print("long time task finished")
     return x + y
 
