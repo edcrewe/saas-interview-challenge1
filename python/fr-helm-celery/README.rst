@@ -37,11 +37,10 @@ status - Service asynchronous task status information
 
 Click on download and then 'Try it Out' then specify the chart to be downloaded and hit run (click on the Model tab to see default values)
 
-.. code-block:: javascript
-   {
-      "name": "mariadb",
-      "source_location": "https://kubernetes-charts.storage.googleapis.com/"
-   }
+|   {
+|      "name": "mariadb",
+|      "source_location": "https://kubernetes-charts.storage.googleapis.com/"
+|   }
 
 Click on tiller and submit a task for listing releases
 
@@ -96,6 +95,8 @@ You can run up the web container to sleep and then exec in to run Flask interact
 -  root@f2cd7f344bcb:/# cd /opt/fr-helm-celery && flask run -h 0.0.0.0
 
 You will see any requests coming in via http://localhost:5000 on the console.
+
+NOTE: If you use make run then you will need to restart the container for code changes to be seen in gunicorn (restart web) or in celery (restart celery).
 
 Linting
 -------
