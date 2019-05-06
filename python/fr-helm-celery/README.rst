@@ -42,6 +42,7 @@ Click on download and then 'Try it Out' then specify the chart to be downloaded 
 |      "source_location": "https://kubernetes-charts.storage.googleapis.com/"
 |   }
 
+
 Click on tiller and submit a task for listing releases
 
 Note for chart install and tiller releases you need to connect to a remote version of tiller.
@@ -50,23 +51,23 @@ You will need to have TLS authentication setup for the remote Kubernetes cluster
 Hit Execute to submit the JSON payload to the API.
 For whichever task you run there will be a celery task id returned.
 
-.. code-block:: javascript
-   {
-      "status": "success",
-      "message": "Download mariadb as task 18fbfe71-e976-4d3f-b889-e5aca82c71d3"
-   }
+|   {
+|      "status": "success",
+|      "message": "Download mariadb as task 18fbfe71-e976-4d3f-b889-e5aca82c71d3"
+|   }
+
 
 Go to http://localhost:5000/v1/task/{task_id} to see the progress or result of running the task.
 
-.. code-block:: javascript
-   {
-      "id": "c373a221-f623-4303-9531-75b3e2452ebb",
-      "result": "{'name': 'mariadb',
-                  'source_location': 'https://kubernetes-charts.storage.googleapis.com/',
-		  'chart_location': '/tmp/pyhelm-8ke_tbu9/mariadb',
-		  'yaml': 'apiVersion: v1\\nappVersion: 10.1.39\\ndescription: Fast, reliable, scalable, and easy to use open-source relational database\\n  system. MariaDB Server is intended for mission-critical, heavy-load production systems\\n  as well as for embedding into mass-deployed software. Highly available MariaDB cluster.\\nengine: gotpl\\nhome: https://mariadb.org\\nicon: https://bitnami.com/assets/stacks/mariadb/img/mariadb-stack-220x234.png\\nkeywords:\\n- mariadb\\n- mysql\\n- database\\n- sql\\n- prometheus\\nmaintainers:\\n- email: containers@bitnami.com\\n  name: Bitnami\\nname: mariadb\\nsources:\\n- https://github.com/bitnami/bitnami-docker-mariadb\\n- https://github.com/prometheus/mysqld_exporter\\nversion: 5.11.2\\n'}",
-    "status": "SUCCESS"
-   }
+|   {
+|      "id": "c373a221-f623-4303-9531-75b3e2452ebb",
+|      "result": "{'name': 'mariadb',
+|                  'source_location': 'https://kubernetes-charts.storage.googleapis.com/',
+|		  'chart_location': '/tmp/pyhelm-8ke_tbu9/mariadb',
+|		  'yaml': 'apiVersion: v1\\nappVersion: 10.1.39\\ndescription: Fast, reliable, scalable, and easy to use open-source relational database\\n  system. MariaDB Server is intended for mission-critical, heavy-load production systems\\n  as well as for embedding into mass-deployed software. Highly available MariaDB cluster.\\nengine: gotpl\\nhome: https://mariadb.org\\nicon: https://bitnami.com/assets/stacks/mariadb/img/mariadb-stack-220x234.png\\nkeywords:\\n- mariadb\\n- mysql\\n- database\\n- sql\\n- prometheus\\nmaintainers:\\n- email: containers@bitnami.com\\n  name: Bitnami\\nname: mariadb\\nsources:\\n- https://github.com/bitnami/bitnami-docker-mariadb\\n- https://github.com/prometheus/mysqld_exporter\\nversion: 5.11.2\\n'}",
+|    "status": "SUCCESS"
+|   }
+
 
 Task Monitor
 ------------
