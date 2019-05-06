@@ -125,3 +125,36 @@ Cleanup
 > make teardown # Takes down the compose containers
 
 > make clean # For removing pyc and pycache plus build and test detritus
+
+Questions
+---------
+
+**Are there any shortcomings of the code?**
+
+- There is no authorisation system implemented.
+- The design of the REST API is somewhat arbitary based on picking a few sample commands.
+- There is only a single test/dev Flask config. For production at least a config with enforced HTTPS would be needed and an SSL proxy in front of gunicron or use of Apache mod_wsgi or some other more secure web server setup.
+- Submitting the TLS authorisation for connecting to remote Tiller instances via JSON is questionable and certainly shouldnt be done without having authorisation and HTTPS in place.
+- The Chart download to local pyhelm cache and path should be surfaced as a managed cache for use in combination with the install, otherwise its a little pointless - since we might as well always use repo and URL for the chart install type and source rather than use these cached Charts
+- CeleryBeat tasks could be setup to cater for scheduled task running.
+- Using redis as the Celery backend can cause a bottleneck if a sufficient number of requests are pushed in.
+
+**How might this project be scaled?**
+
+- Move the Celery broker from redis to one of the more scalable ones: Rabbit MQ, Amazon SQS or perhaps Zookeeper
+- Scale out by simply adding more celery workers per celery instance and more instance containers
+- Analyse the realworld usage and at least optimize the tasks and task flows for it.
+- Add a central persistent data store to hold cluster state and metadata - to better inform required commands and perhaps add a higher level business logic API over them, eg. command payload becomes rollback US-123 idm to vers-456 - instead of direct helm commands.
+
+**How might one approach doing sequential versus parallel tasks?**
+
+Common approaches are to either use a lock so that a task is only run when it is acquired.
+Or to chain tasks together so that successful completion of one is used as callback to the next.
+
+Celery offers various primitives for creating complex parallel and serial flows of task execution. Since each of the primitives can call the others, see the canvas documentation http://docs.celeryproject.org/en/latest/userguide/canvas.html
+Some examples of the primitives are as follows...
+
+- Group provides standard parallel execution.
+- Chain links together tasks making a chain of callbacks. So that each task is only enabled for execution after completion of the previous one.
+- Chord is basically a Group with a final task that only gets run after the group tasks have all completed their parallel run.
+- Map runs a task repeatedly with a list of different arguments returning all the results or an aggregation of them.
