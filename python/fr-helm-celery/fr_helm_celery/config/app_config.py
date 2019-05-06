@@ -7,7 +7,7 @@ class CeleryConfig(object):
 
     broker_url = CONFIG["celery"]["broker_url"]
     result_backend = CONFIG["celery"]["result_backend"]
-    imports = "fr_helm_celery.orchestrators.tasks"
+    imports = "fr_helm_celery.helm.tasks"
     worker_concurrency = CONFIG["celery"]["workers"]
     enable_utc = True
 

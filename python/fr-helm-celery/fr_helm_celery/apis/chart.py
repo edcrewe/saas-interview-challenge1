@@ -1,7 +1,7 @@
 """Helm Charts
 """
 import logging
-from fr_helm_celery.orchestrators import celery
+from fr_helm_celery.helm import celery
 
 from flask_restplus import Resource, Namespace, fields
 from celery.exceptions import CeleryError
@@ -14,7 +14,11 @@ chart = chart_api.model(
     "ChartMetadata",
     {
         "host": fields.String(
-            required=True, description="Service host", default="localhost"
+            required=True, description="Tiller host", default="localhost"
+        ),
+        "port": fields.Integer(required=True, description="Tiller port", default=44134),
+        "tls": fields.String(
+            required=False, description="Tiller TLS config", default=""
         ),
         "name": fields.String(
             required=True, description="Service name", default="nginx-ingress"
@@ -24,7 +28,7 @@ chart = chart_api.model(
         ),
         "source_location": fields.String(
             required=True,
-            description="Chart source type",
+            description="Chart source URL",
             default="https://kubernetes-charts.storage.googleapis.com",
         ),
         "dry_run": fields.Boolean(

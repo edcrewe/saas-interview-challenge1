@@ -4,7 +4,7 @@
 import celery.states as states
 from flask_restplus import Namespace, Resource
 
-from fr_helm_celery.orchestrators import celery
+from fr_helm_celery.helm import celery
 
 
 status_api = Namespace(

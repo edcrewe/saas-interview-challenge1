@@ -34,7 +34,7 @@ services:
       - no_proxy
     volumes:
       - ./:/opt/fr-helm-celery/
-    command: bash -c 'rm -rf $FR_OPS_TEST_WORKER_LOG_PATH ; pip install -e /opt/fr-helm-celery && celery worker -A fr_helm_celery.orchestrators --pool gevent --loglevel=info --logfile=$FR_OPS_TEST_WORKER_LOG_PATH'
+    command: bash -c 'rm -rf $FR_OPS_TEST_WORKER_LOG_PATH ; pip install -e /opt/fr-helm-celery && celery worker -A fr_helm_celery.helm --pool gevent --loglevel=info --logfile=$FR_OPS_TEST_WORKER_LOG_PATH'
     depends_on:
       - redis
     links:
@@ -63,7 +63,7 @@ services:
       - https_proxy
       - no_proxy
     entrypoint: flower
-    command: -A fr_helm_celery.orchestrators.tasks --port=5555 --broker=redis://redis:6379/1
+    command: -A fr_helm_celery.helm.tasks --port=5555 --broker=redis://redis:6379/1
     volumes:
       - ./:/opt/fr-helm-celery/
     depends_on:

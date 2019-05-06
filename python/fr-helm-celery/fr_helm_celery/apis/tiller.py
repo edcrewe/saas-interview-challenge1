@@ -1,7 +1,7 @@
 """Helm Charts
 """
 import logging
-from fr_helm_celery.orchestrators import celery
+from fr_helm_celery.helm import celery
 
 from flask_restplus import Resource, Namespace, fields
 from celery.exceptions import CeleryError
@@ -13,12 +13,16 @@ tiller_api = Namespace("tiller", description="Tiller releases data")
 tiller = tiller_api.model(
     "TillerMetadata",
     {
-        "host": fields.String(required=True, description="Service host"),
+        "host": fields.String(required=True, description="Tiller host"),
+        "port": fields.Integer(required=True, description="Tiller port", default=44134),
+        "tls": fields.String(
+            required=False, description="Tiller TLS config", default=""
+        ),
         "namespace": fields.String(
-            required=True, description="Releases Namespace", default=""
+            required=False, description="Filter releases by namespace", default=""
         ),
         "status_codes": fields.String(
-            required=True, description="Releases Namespace", default=""
+            required=False, description="Filter releases by status", default=""
         ),
     },
 )
