@@ -23,7 +23,7 @@ pip install -e fr-helm-celery
 Web UI
 ------
 
-Go to http://localhost:5000 for the Swagger UI (this takes a minute to load)
+Go to http://localhost:5000 for the Swagger UI
 
 This alpha version just provides some sample helm commands. Chart download, install and list releases as web services
 
@@ -79,7 +79,7 @@ Click on Tasks to check the status and if completed successfully or failed.
 
 Click on the task id to get the returned result or exception from running a particular task.
 
-The Monitor tab provides live graphs of the load on Celery (if sufficient tasks are being pumped into the system)
+The Monitor tab provides live graphs of the load on Celery - you need to pump in a few tasks to catch them as they go by!
 
 Develop
 -------
@@ -119,8 +119,10 @@ Tests
 
 > make test
 
-Runs the unit and integration test suite.
+Runs the unit and integration test suite. Plus generates a code coverage report.
 
+Mocks are used for the unit tests so that they have no dependencies.
+To run the integration test suite a celery worker is run up and the flask test client simulates the web API.
 
 Cleanup
 -------
@@ -138,9 +140,10 @@ Questions
 - The design of the REST API is somewhat arbitary based on picking a few sample commands.
 - There is only a single test/dev Flask config. For production at least a config with enforced HTTPS would be needed and an SSL proxy in front of gunicron or use of Apache mod_wsgi or some other more secure web server setup.
 - Submitting the TLS authorisation for connecting to remote Tiller instances via JSON is questionable and certainly shouldnt be done without having authorisation and HTTPS in place.
-- The Chart download to local pyhelm cache and path should be surfaced as a managed cache for use in combination with the install, otherwise its a little pointless - since we might as well always use repo and URL for the chart install type and source rather than use these cached Charts
-- CeleryBeat tasks could be setup to cater for scheduled task running.
+- The Chart download to local pyhelm cache and path should be surfaced as a managed cache for use in combination with the install, otherwise its a little pointless - since we might as well always use type=repo and source=URL for the chart install if we have to know cache paths to use these cached Charts.
+- CeleryBeat tasks could be setup to cater for scheduled task running eg. update Chart cache.
 - Using redis as the Celery backend can cause a bottleneck if a sufficient number of requests are pushed in.
+- There are just sample unit and integration tests, more should be added to get more complete code coverage.
 
 **How might this project be scaled?**
 

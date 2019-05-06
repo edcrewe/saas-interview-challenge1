@@ -15,9 +15,9 @@ teardown:
 	docker-compose rm -f -s
 	docker-compose --project-name=test down --rmi local --remove-orphans
 	docker-compose --project-name=helm_service down --rmi local --remove-orphans
-	docker volume prune
+	docker volume prune -f
 
-run:
+run: clean teardown
 	docker-compose --project-name=helm_service up --force-recreate --no-start
 	docker-compose --project-name=helm_service run -d -p 5000:5000 -e FLASK_APP=fr_helm_celery.app -e PYTHONPATH=/opt/fr-helm-celery/fr_helm_celery fr-ops-web /bin/bash -c "pip install -Ur /opt/fr-helm-celery/requirements/web.txt && cd /opt/fr-helm-celery && exec gunicorn --bind 0.0.0.0:5000 --workers 2 --access-logfile=/var/log/gunicorn_access.log --error-logfile=/var/log/gunicorn_error.log --log-level=error fr_helm_celery.app:app"
 
