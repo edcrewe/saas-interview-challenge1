@@ -66,9 +66,13 @@ class Chart(Resource):
                     },
                     500,
                 )
-        return {
-            "status": "success",
-            "message": "Installing chart {} as task {}".format(
-                chart_data["name"], task.id
-            ),
-        }
+        return (
+            {
+                "status": "success",
+                "task_id": task.id,
+                "message": "Installing chart {} as task {}".format(
+                    chart_data["name"], task.id
+                ),
+            },
+            202,
+        )

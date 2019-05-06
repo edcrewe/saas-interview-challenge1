@@ -75,7 +75,7 @@ services:
         aliases:
           - fr-ops-flower
   fr-ops-web:
-    image: python:latest
+    image: fr-ops-celery:latest
     environment:
       - FR_OPS_API_DEBUG
       - FR_OPS_API_HOST
@@ -92,7 +92,7 @@ services:
       - http_proxy
       - https_proxy
       - no_proxy
-    command: bash -c "pip install -Ur /opt/fr-helm-celery/requirements/web.txt && cd /opt/fr-helm-celery && exec gunicorn --bind 0.0.0.0:5000 --workers 2 --access-logfile=/var/log/gunicorn_access.log --error-logfile=/var/log/gunicorn_error.log --log-level=error fr_helm_celery.app:app"
+    command: bash -c "cd /opt/fr-helm-celery && exec gunicorn --bind 0.0.0.0:5000 --workers 2 --access-logfile=/var/log/gunicorn_access.log --error-logfile=/var/log/gunicorn_error.log --log-level=error fr_helm_celery.app:app"
     volumes:
       - ./:/opt/fr-helm-celery/
     ports:

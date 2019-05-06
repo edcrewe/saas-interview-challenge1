@@ -28,7 +28,7 @@ lint:
 
 test:
 	docker-compose --project-name=test up --force-recreate --no-start
-	docker-compose --project-name=test run fr-ops-celery bash -c 'pytest /opt/fr-helm-celery/tests'
+	docker-compose --project-name=test run fr-ops-celery bash -c '/opt/fr-helm-celery/tests/runner.sh'
 
 clean:
 	find . -name '*.pyc' -exec rm -f {} +
@@ -39,8 +39,3 @@ clean:
 	rm -fr dist/
 	rm -fr *.egg-info
 	rm -rf .eggs
-	rm -rf tests/htmlcov/
-	rm -rf tests/coverage.xml
-	rm -f .coverage
-	rm -f unit-test-report.xml
-	find . -name '*,cover' -exec rm -fr {} +

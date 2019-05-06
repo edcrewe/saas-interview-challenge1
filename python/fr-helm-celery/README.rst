@@ -53,6 +53,7 @@ For whichever task you run there will be a celery task id returned.
 
 |   {
 |      "status": "success",
+|      "task_id": "18fbfe71-e976-4d3f-b889-e5aca82c71d3",
 |      "message": "Download mariadb as task 18fbfe71-e976-4d3f-b889-e5aca82c71d3"
 |   }
 

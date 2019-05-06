@@ -50,9 +50,13 @@ class Tiller(Resource):
                 {"status": "error", "message": "Unable to start tiller list releases"},
                 500,
             )
-        return {
-            "status": "success",
-            "message": "Tiller list releases for {} as task {}".format(
-                tiller_data["namespace"], task.id
-            ),
-        }
+        return (
+            {
+                "status": "success",
+                "task_id": task.id,
+                "message": "Tiller list releases for {} as task {}".format(
+                    tiller_data["namespace"], task.id
+                ),
+            },
+            202,
+        )

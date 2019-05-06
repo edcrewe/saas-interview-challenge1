@@ -50,7 +50,13 @@ class Download(Resource):
                     {"status": "error", "message": "Unable to start download task"},
                     500,
                 )
-        return {
-            "status": "success",
-            "message": "Download {} as task {}".format(download_data["name"], task.id),
-        }
+        return (
+            {
+                "status": "success",
+                "task_id": task.id,
+                "message": "Download {} as task {}".format(
+                    download_data["name"], task.id
+                ),
+            },
+            202,
+        )
