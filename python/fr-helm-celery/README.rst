@@ -144,6 +144,7 @@ Questions
 - CeleryBeat tasks could be setup to cater for scheduled task running eg. update Chart cache.
 - Using redis as the Celery backend can cause a bottleneck if a sufficient number of requests are pushed in.
 - There are just sample unit and integration tests, more should be added to get more complete code coverage.
+- Add a CI server job. Trigger MR request runs of lint and test passing for merge. Add xmlrunner to generate coverage reports for the CI server.
 
 **How might this project be scaled?**
 
