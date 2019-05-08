@@ -69,3 +69,7 @@ GTAGS
 
 .python-version
 .tool-versions
+
+### Golang ignores
+
+sum.go

@@ -1,0 +1,37 @@
+version: "3.3"
+
+services:
+  fr-ops-redis:
+    image: redis:latest
+    hostname: redis
+    networks:
+      helm_service_network:
+        aliases:
+          - redis
+  fr-ops-machinery:
+    build:
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+      context: ./
+      dockerfile: ./Dockerfile
+    image: fr-ops-machinery:latest
+    environment:
+      - http_proxy
+      - https_proxy
+      - no_proxy
+    volumes:
+      - ./:/opt/fr-helm-service/
+    command: bash -c 'go run /root/go/example/machinery.go -c config.yml worker'
+    depends_on:
+      - fr-ops-redis
+    links:
+      - fr-ops-redis
+    networks:
+      helm_service_network:
+        aliases:
+          - fr-ops-machinery
+
+networks:
+  helm_service_network:
