@@ -1,4 +1,4 @@
-module forgerock.com/frhelmservice
+module forgerock.com/helmservice
 
 require (
 	github.com/Masterminds/semver v1.4.2 // indirect

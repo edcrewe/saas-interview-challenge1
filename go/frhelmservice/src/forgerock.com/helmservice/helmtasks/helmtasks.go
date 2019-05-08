@@ -14,16 +14,16 @@ import (
 // Add with a delay in ... dummy asynch task
 func LongtimeAdd(args ...int64) (int64, error) {
 	sum := int64(0)
-	time.Sleep(2 * time.Second)
+	time.Sleep(1 * time.Second)
 	for _, arg := range args {
-		sum += arg + 10
+		sum += arg
 	}
 	return sum, nil
 }
 
 func ChartDownload() (*url.URL, error) {
 	c := downloader.ChartDownloader{
-		HelmHome: helmpath.Home("/tmp/helmhome"),
+		HelmHome: helmpath.Home("/opt/frhelmservice"),
 		Out:      os.Stderr,
 		Getters:  getter.All(environment.EnvSettings{}),
 	}

@@ -38,7 +38,7 @@ func send() error {
 
 	var initTasks = func() {
 		addTask0 = tasks.Signature{
-			Name: "add",
+			Name: "longadd",
 			Args: []tasks.Arg{
 				{
 					Type:  "int64",
@@ -89,12 +89,11 @@ func send() error {
 	for _, asyncResult := range asyncResults {
 		results, err := asyncResult.Get(time.Duration(time.Millisecond * 5))
 		if err != nil {
+			log.WARNING.Printf(err.Error())
 			return fmt.Errorf("Getting task result failed with error: %s", err.Error())
 		}
 		log.INFO.Printf(
-			"%v + %v = %v\n",
-			asyncResult.Signature.Args[0].Value,
-			asyncResult.Signature.Args[1].Value,
+			"result = %v\n",
 			tasks.HumanReadableResults(results),
 		)
 	}

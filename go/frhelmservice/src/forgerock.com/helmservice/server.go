@@ -5,7 +5,7 @@ import (
 	"github.com/RichardKnop/machinery/v1"
 	"github.com/RichardKnop/machinery/v1/config"
 
-	helmtasks "forgerock.com/frhelmservice/helmtasks"
+	helmtasks "forgerock.com/helmservice/helmtasks"
 )
 
 var taskmap  map[string]interface{}
@@ -24,7 +24,7 @@ func startServer() (*machinery.Server, error) {
 
 	// Register tasks
 	taskmap = map[string]interface{}{
-		"add":               helmtasks.LongtimeAdd,
+		"longadd":           helmtasks.LongtimeAdd,
 		"download":          helmtasks.ChartDownload,
 	}
 
