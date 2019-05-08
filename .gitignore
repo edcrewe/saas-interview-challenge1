@@ -72,4 +72,4 @@ GTAGS
 
 ### Golang ignores
 
-sum.go
+go.sum
