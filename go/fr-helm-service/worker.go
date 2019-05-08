@@ -3,6 +3,7 @@ package main
 
 import (
 	"github.com/RichardKnop/machinery/v1/log"
+	"github.com/RichardKnop/machinery/v1/tasks"
 
 	tracers "github.com/RichardKnop/machinery/example/tracers"
 )
