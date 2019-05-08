@@ -23,7 +23,7 @@ services:
       - no_proxy
     volumes:
       - ./:/opt/frhelmservice/
-    command: bash -c './worker'
+    command: bash -c 'cd /opt/frhelmservice/src/forgerock.com/helmservice && ./worker'
     depends_on:
       - fr-ops-redis
     links:

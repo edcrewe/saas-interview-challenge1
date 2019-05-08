@@ -23,7 +23,7 @@ func LongtimeAdd(args ...int64) (int64, error) {
 
 func ChartDownload() (*url.URL, error) {
 	c := downloader.ChartDownloader{
-		HelmHome: helmpath.Home("/opt/frhelmservice"),
+		HelmHome: helmpath.Home("/root/.helm"),
 		Out:      os.Stderr,
 		Getters:  getter.All(environment.EnvSettings{}),
 	}

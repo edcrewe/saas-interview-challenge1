@@ -7,7 +7,7 @@ ARG no_proxy
 COPY . /opt/frhelmservice
 WORKDIR /opt/frhelmservice
 
-ENV GOPATH="/opt/frhelmservice"
+ENV GOPATH="/root/go;/opt/frhelmservice"
 ENV PATH="$GOPATH/bin:$PATH"
 
 # Install Helm with an empty repo dir so it doesnt try to get it from k8s
@@ -18,5 +18,4 @@ RUN mkdir -p /root/.helm/repository
 RUN touch /root/.helm/repository/repositories.yaml
 RUN linux-ppc64le/helm init -c
 
-RUN go get github.com/RichardKnop/machinery/v1
-RUN go install forgerock.com/helmservice
+RUN cd /opt/frhelmservice/src/forgerock.com/helmservice && go build worker.go server.go
