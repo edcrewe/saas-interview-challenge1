@@ -4,7 +4,7 @@ ARG http_proxy
 ARG https_proxy
 ARG no_proxy
 
-COPY . /opt/fr-helm-service
-WORKDIR /opt/fr-helm-service
+COPY . /opt/frhelmservice
+WORKDIR /opt/frhelmservice
 
 RUN go get github.com/RichardKnop/machinery/v1
