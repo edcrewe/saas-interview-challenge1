@@ -52,16 +52,8 @@ func send() error {
 		}
 
 		addTask1 = tasks.Signature{
-			Name: "add",
+			Name: "download",
 			Args: []tasks.Arg{
-				{
-					Type:  "int64",
-					Value: 2,
-				},
-				{
-					Type:  "int64",
-					Value: 2,
-				},
 			},
 		}
 

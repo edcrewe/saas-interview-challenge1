@@ -23,7 +23,7 @@ services:
       - no_proxy
     volumes:
       - ./:/opt/frhelmservice/
-    command: bash -c 'go run /root/go/example/machinery.go -c config.yml worker'
+    command: bash -c './worker'
     depends_on:
       - fr-ops-redis
     links:
