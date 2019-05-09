@@ -16,6 +16,6 @@ RUN wget https://storage.googleapis.com/kubernetes-helm/helm-v2.13.1-linux-ppc64
 RUN tar -zxvf helm*.tar.gz
 RUN mkdir -p /root/.helm/repository
 RUN touch /root/.helm/repository/repositories.yaml
-RUN linux-ppc64le/helm init -c
+RUN linux-ppc64le/helm init -c --home=/root/.helm
 
 RUN cd /opt/frhelmservice/src/forgerock.com/helmservice && go build worker.go server.go

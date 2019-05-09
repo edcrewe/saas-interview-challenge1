@@ -3,7 +3,8 @@ package helmtasks
 import (
 	"time"
 	"os"
-	"net/url"
+	"path/filepath"
+	"io/ioutil"
 
 	"k8s.io/helm/pkg/downloader"
 	"k8s.io/helm/pkg/getter"
@@ -21,14 +22,21 @@ func LongtimeAdd(args ...int64) (int64, error) {
 	return sum, nil
 }
 
-func ChartDownload() (*url.URL, error) {
+func ChartDownload() (string, error) {
+	hh := helmpath.Home("/root/.helm")
 	c := downloader.ChartDownloader{
-		HelmHome: helmpath.Home("/root/.helm"),
+		HelmHome: hh,
 		Out:      os.Stderr,
 		Getters:  getter.All(environment.EnvSettings{}),
 	}
-	ref := "mongodb"
+	ref := "https://kubernetes-charts.storage.googleapis.com/mongdb"
 	version := "5.17.0"
-	u, _, err := c.ResolveChartVersion(ref, version)
-	return u, err
+        dest := filepath.Join(hh.String(), "dest")
+	_ = os.Mkdir(dest, 0700)
+	_, _, err := c.DownloadTo(ref, version, dest)
+	contents, err := ioutil.ReadFile(filepath.Join(dest, "mongodb"))
+	if err != nil {
+		panic(err)
+	}
+	return string(contents), err
 }

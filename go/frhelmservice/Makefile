@@ -17,7 +17,8 @@ teardown:
 
 run: clean teardown
 	docker-compose --project-name=go_helm_service up --force-recreate --no-start
-	docker-compose --project-name=go_helm_service run -d -p 8000:8000 --name="fr-ops-machinery" fr-ops-machinery /bin/bash -c "cd /opt/frhelmservice/src/forgerock.com/helmservice && ./worker"
+	docker-compose --project-name=go_helm_service run -d -p 8000:8000 --name="fr-ops-machinery" fr-ops-machinery /bin/bash -c "cd /opt/frhelmservice/src/forgerock.com/helmservice && go build worker.go server.go && ./worker"
+	docker exec -it fr-ops-machinery bash
 
 test:
 	docker-compose --project-name=test up --force-recreate --no-start
